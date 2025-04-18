@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanktonSee</title>
+
+    <link rel="stylesheet" href="static/lib/bootstrap.css">    
+    <link rel="stylesheet" href="static/lib/all.css">
+    <link rel="stylesheet" href="static/style.css">
+    
+    <script src="static/lib/marked.js"></script>
+</head>
+<body style="letter-spacing: 1px; overflow: scroll;">
+    <div class="background">
+        <img src="static/assets/background.png" alt="background" class="background-image">
+    </div>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container-fluid mx-4">
+            <a class="navbar-brand" href="#">
+                <img src="/static/assets/logo.png" alt="logo" width="250" height="137.5">
+            </a>            
+            
+            <button class="btn btn-success btn-back">Kembali</button>
+        </div>
+    </nav>
+
+    <main class='main'>
+        <div class="main-content d-flex flex-column">
+            <div class="predict-result justify-content-center align-items-center d-flex">
+                <div class="image">
+                    <p class="title my-1">Area Klasifikasi:</p>
+                    <img src="" alt="Gambar Plankton">
+                </div>
+                <div class="probability-result">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Jenis Plankton</th>
+                                <th scope="col">Probabilitas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>                                             
+                    </table>
+                </div>
+            </div>
+            <div class="response-llm">
+                <div id="output-llm"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>     
+        document.addEventListener("DOMContentLoaded", function () {
+            const imgPath = localStorage.getItem("img_path");
+            const predictions = JSON.parse(localStorage.getItem("predictions"));
+            const llmResponse = localStorage.getItem("response");
+
+            if (imgPath) {
+                document.querySelector(".image img").src = imgPath;
+            }
+
+            if (predictions && predictions.length > 0) {
+                const tbody = document.querySelector("tbody");
+                predictions.forEach(([className, prob]) => {
+                    const row = `<tr><td>${className}</td><td>${prob}</td></tr>`;
+                    tbody.innerHTML += row;
+                });
+            }
+
+            if (llmResponse) {
+                document.getElementById("output-llm").innerHTML = marked.parse(llmResponse);
+            }
+
+            localStorage.removeItem("img_path");
+            localStorage.removeItem("predictions");
+            localStorage.removeItem("response");
+        });
+    </script>
+
+    <script src="static/lib/jquery.js"></script>
+    <script src="static/lib/bootstrap.js"></script>
+    <script src="static/lib/popper.js"></script>
+    <script src="static/lib/swal.js"></script>
+    <script src="static/script.js"></script>
+</body>
+</html>

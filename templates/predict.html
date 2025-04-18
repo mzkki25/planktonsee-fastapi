@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlanktonSee</title>
+
+    <link rel="stylesheet" href="static/lib/bootstrap.css">    
+    <link rel="stylesheet" href="static/lib/all.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="static/lib/marked.js"></script>
+</head>
+<body style="letter-spacing: 1px;">
+    <div class="background">
+        <img src="static/assets/background.png" alt="background" class="background-image">
+    </div>
+
+    <div id="load">
+        <div>G</div>
+        <div>N</div>
+        <div>I</div>
+        <div>D</div>
+        <div>A</div>
+        <div>O</div>
+        <div>L</div>
+    </div>    
+    <div id="transparant-bg"></div>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container mx-4">
+            <a class="navbar-brand" href="#">
+                <img src="/static/assets/logo.png" alt="logo" width="250" height="137.5">
+            </a>
+        </div>
+    </nav>
+    
+    <main style="min-height: 100vh;">
+        <div class="activity d-flex align-items-center justify-content-center flex-column">
+            <div class="title-section d-flex justify-content-center align-items-center py-2">
+                <img src="static/assets/judul.png" alt="Judul">
+            </div>
+            <div class="main-activity py-5 justify-content-center align-items-center d-flex flex-wrap">
+                <div class="upload-container d-flex flex-column align-items-center">
+                    <input type="text" id="image-upload" placeholder="Unggah citra Anda disini..." disabled>
+                    <div class="dropdown d-flex justify-content-center align-items-center flex-wrap">
+                        <div class="model-dropdown-container">
+                            <label for="deep-learning-model">Model YOLO</label>
+                            <select id="deep-learning-model">
+                                <option value="yolov8-detect">YOLOv8-DETECT</option>
+                                <option value="yolov8-acvit">YOLOv8-ACVIT</option>
+                            </select>
+                        </div>
+                        <div class="model-dropdown-container">
+                            <label for="llm-model">Model LLM</label>
+                            <select id="llm-model">
+                                <option value="gemini">Gemini</option>
+                                <option value="qwen">Qwen2</option>
+                                <option value="deepseek">DeepSeek</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="button-ml-container d-flex flex-column justify-content-center align-items-center">
+                    <input type="file" id="file-image-upload" accept="image/*" style="display: none;">
+                    <button class="btn primary-btn text-white btn-upload-image" onclick="document.getElementById('file-image-upload').click();">Unggah Citra</button>
+                    <button class="btn primary-btn text-white btn-predict-image">Prediksi Citra</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="static/lib/jquery.js"></script>
+    <script src="static/lib/bootstrap.js"></script>
+    <script src="static/lib/popper.js"></script>
+    <script src="static/lib/swal.js"></script>
+    <script src="static/script.js"></script>
+</body>
+</html>
