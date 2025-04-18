@@ -7,13 +7,13 @@ from fastapi.responses import HTMLResponse
 from fastapi import Request
 from fastapi import Form
 
-from plankton_predict import read_image, predict_img
+from utils import read_image, predict_img
 
 import os
 import logging
 import requests
 
-UPLOAD_FOLDER = 'static/uploads'
+UPLOAD_FOLDER = 'all/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 logging.basicConfig(level=logging.INFO)
@@ -29,13 +29,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/all", StaticFiles(directory="all"), name="all")
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def render_opening(request: Request): 
-    for file in os.listdir('static/uploads'):
-        os.remove(os.path.join('static/uploads', file))
+    for file in os.listdir('all/uploads'):
+        os.remove(os.path.join('all/uploads', file))
 
     logger.info("Cleared upload folder")
     return templates.TemplateResponse("opening.html", {"request": request})

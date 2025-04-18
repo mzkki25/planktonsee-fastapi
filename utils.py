@@ -7,6 +7,7 @@ import os
 import uuid
 import google.generativeai as genai
 import dotenv
+import json
 import numpy as np
 
 dotenv.load_dotenv()
@@ -101,7 +102,9 @@ def deepseek(message):
         return "Terjadi kesalahan saat menghubungi DeepSeek"
 
 try:
-    cred = credentials.Certificate("credential/credentials.json")
+    cred = json.loads(os.getenv("CREDENTIALS"))
+    cred = credentials.Certificate(cred)
+    # cred = credentials.Certificate("credential/credentials.json")
     firebase_admin.initialize_app(cred) if not firebase_admin._apps else firebase_admin.get_app()
 
     bucket = storage.bucket(name='planktosee-temp-file')
