@@ -5,24 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlanktonSee</title>
 
-    <link rel="stylesheet" href="all/lib/bootstrap.css">    
-    <link rel="stylesheet" href="all/lib/all.css">
-    <link rel="stylesheet" href="all/style.css">
-    
-    <script src="all/lib/marked.js"></script>
+    <link rel="stylesheet" href="/all/lib/bootstrap.css">    
+    <link rel="stylesheet" href="/all/lib/all.css">
+    <link rel="stylesheet" href="/all/style.css">
+
+    <script src="/all/lib/marked.js"></script>
 </head>
 <body style="letter-spacing: 1px; overflow: scroll;">
     <div class="background">
-        <img src="all/assets/background.png" alt="background" class="background-image">
+        <img src="/all/assets/background.png" alt="background" class="background-image">
     </div>
 
     <nav class="navbar navbar-expand-sm navbar-light bg-light">
         <div class="container-fluid mx-4">
             <a class="navbar-brand" href="#">
-                <img src="all/assets/logo.png" alt="logo" width="250" height="137.5">
+                <img src="/all/assets/logo.png" alt="logo" width="250" height="137.5">
             </a>            
-            
-            <button class="btn btn-success btn-back">Kembali</button>
+            <button class="btn btn-success btn-back" onclick="history.back()">Kembali</button>
         </div>
     </nav>
 
@@ -31,60 +30,42 @@
             <div class="predict-result justify-content-center align-items-center d-flex">
                 <div class="image">
                     <p class="title my-1">Area Klasifikasi:</p>
-                    <img src="" alt="Gambar Plankton">
+                    <img src="{{ img_path }}" alt="Gambar Plankton" style="max-width: 100%; border-radius: 12px;">
                 </div>
-                <div class="probability-result">
+                <div class="probability-result ms-4">
                     <table class="table table-hover table-bordered">
-                        <thead>
+                        <thead class="table-success">
                             <tr>
                                 <th scope="col">Jenis Plankton</th>
                                 <th scope="col">Probabilitas</th>
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            {% for p in predictions %}
+                            <tr>
+                                <td>{{ p.class }}</td>
+                                <td>{{ p.confidence }}</td>
+                            </tr>
+                            {% endfor %}
                         </tbody>                                             
                     </table>
                 </div>
             </div>
-            <div class="response-llm">
+            <div class="response-llm mt-4">
                 <div id="output-llm"></div>
             </div>
         </div>
     </main>
 
-    <script>     
-        document.addEventListener("DOMContentLoaded", function () {
-            const imgPath = localStorage.getItem("img_path");
-            const predictions = JSON.parse(localStorage.getItem("predictions"));
-            const llmResponse = localStorage.getItem("response");
-
-            if (imgPath) {
-                document.querySelector(".image img").src = imgPath;
-            }
-
-            if (predictions && predictions.length > 0) {
-                const tbody = document.querySelector("tbody");
-                predictions.forEach(([className, prob]) => {
-                    const row = `<tr><td>${className}</td><td>${prob}</td></tr>`;
-                    tbody.innerHTML += row;
-                });
-            }
-
-            if (llmResponse) {
-                document.getElementById("output-llm").innerHTML = marked.parse(llmResponse);
-            }
-
-            localStorage.removeItem("img_path");
-            localStorage.removeItem("predictions");
-            localStorage.removeItem("response");
-        });
+    <script>
+        const response = `{{ response }}`;
+        document.getElementById("output-llm").innerHTML = marked.parse(response);
     </script>
 
-    <script src="all/lib/jquery.js"></script>
-    <script src="all/lib/bootstrap.js"></script>
-    <script src="all/lib/popper.js"></script>
-    <script src="all/lib/swal.js"></script>
-    <script src="all/script.js"></script>
+    <script src="/all/lib/jquery.js"></script>
+    <script src="/all/lib/bootstrap.js"></script>
+    <script src="/all/lib/popper.js"></script>
+    <script src="/all/lib/swal.js"></script>
+    <script src="/all/script.js"></script>
 </body>
 </html>

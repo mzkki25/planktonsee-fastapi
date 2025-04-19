@@ -24,3 +24,4 @@ firebase-admin==6.6.0
 python-dotenv==0.21.0
 uvicorn==0.32.1
 ttach==0.0.3
+python-multipart

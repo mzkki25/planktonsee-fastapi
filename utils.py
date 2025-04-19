@@ -23,7 +23,8 @@ logger = logging.getLogger(__name__)
 
 def gemini(message):
     try:
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+        API_KEY = os.getenv("GOOGLE_API_KEY")
+        genai.configure(api_key=API_KEY)
 
         chatbot = genai.GenerativeModel("gemini-1.5-flash-002")
         system = f"""
@@ -102,9 +103,7 @@ def deepseek(message):
         return "Terjadi kesalahan saat menghubungi DeepSeek"
 
 try:
-    cred = json.loads(os.getenv("CREDENTIALS"))
-    cred = credentials.Certificate(cred)
-    # cred = credentials.Certificate("credential/credentials.json")
+    cred = credentials.Certificate("credential/credentials.json")
     firebase_admin.initialize_app(cred) if not firebase_admin._apps else firebase_admin.get_app()
 
     bucket = storage.bucket(name='planktosee-temp-file')

@@ -17,11 +17,11 @@ $(document).ready(function() {
     );
 
     $start.on('click', function() {
-        window.location.href = 'http://127.0.0.1:8000/predict_ui'; 
+        window.location.href = '/predict_ui'; 
     });
 
     $home.on('click', function() {
-        window.location.href = 'http://127.0.0.1:8000/'; 
+        window.location.href = '/'; 
     });
     
 });
@@ -85,17 +85,10 @@ $(document).ready(function () {
                         confirmButton: 'custom-swal-button'
                     },
                 });
-
-                localStorage.setItem("error", data.error);
-
-                window.location.href = "http://127.0.0.1:8000/error";
+                return;
             }
 
-            localStorage.setItem("img_path", data.img_path);
-            localStorage.setItem("predictions", JSON.stringify(data.predictions));
-            localStorage.setItem("response", data.response);
-
-            window.location.href = "http://127.0.0.1:8000/result";
+            window.location.href = `/result/${data.doc_id}`;
         })
         .catch(err => {
             $("#load").hide();
